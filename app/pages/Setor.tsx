@@ -19,7 +19,7 @@ const Setor: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex flex-col items-center justify-center flex-1 bg-gray-100">
-        <h1 className="text-4xl font-bold mb-6 text-black">Mapa de Calor por Setor</h1>
+        <h1 className="text-4xl font-bold mb-6 text-black">Ranking de Setores</h1>
 
         {/* Mapa de Calor */}
         <div className="w-full max-w-4xl mb-6">

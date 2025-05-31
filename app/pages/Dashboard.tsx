@@ -14,40 +14,29 @@ const Dashboard: React.FC = () => {
   const [summaryData, setSummaryData] = useState({ totalOutbreaks: 0, hospitalsWithAlerts: 0, mostRecurringBacteria: '' });
 
   useEffect(() => {
-    const fetchData = async () => {
-      // Fetch heatmap data
-      const { data: surtos } = await supabase
-        .from('surtos') 
-        .select('lat, lng, intensidade');
-      setHeatmapData(
-        surtos
-          ? surtos.map((s) => ({
-              lat: s.lat,
-              lng: s.lng,
-              intensity: s.intensidade,
-            }))
-          : []
-      );
+    // Mock data for heatmap
+    const mockHeatmapData = [
+      { lat: -30.0346, lng: -51.2177, intensity: 5 },
+      { lat: -30.0350, lng: -51.2180, intensity: 3 },
+      { lat: -30.0330, lng: -51.2160, intensity: 4 },
+    ];
+    setHeatmapData(mockHeatmapData);
 
-      // Fetch ranking data
-      const { data: hospitais } = await supabase
-        .from('hospitais') 
-        .select('nome, tendencia'); 
-      setRankingItems(hospitais ? hospitais.map((h) => ({ name: h.nome, trend: h.tendencia })) : []);
+    // Mock data for ranking
+    const mockRankingItems: { name: string; trend: "up" | "down" }[] = [
+      { name: "Setor A", trend: "up" },
+      { name: "Setor B", trend: "down" },
+      { name: "Setor C", trend: "up" },
+    ];
+    setRankingItems(mockRankingItems);
 
-      // Fetch summary data
-      const { data: resumo } = await supabase
-        .from('resumo') 
-        .select('*')
-        .single();
-      setSummaryData({
-        totalOutbreaks: resumo?.total_surtos || 0, 
-        hospitalsWithAlerts: resumo?.hospitais_com_alertas || 0, 
-        mostRecurringBacteria: resumo?.bacteria_mais_recorrente || '', 
-      });
+    // Mock data for summary panel
+    const mockSummaryData = {
+      totalOutbreaks: 15,
+      hospitalsWithAlerts: 3,
+      mostRecurringBacteria: "E. coli",
     };
-
-    fetchData();
+    setSummaryData(mockSummaryData);
   }, []);
 
   return (
