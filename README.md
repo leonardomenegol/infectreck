@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Infectreck
 
-## Getting Started
+Infectreck é uma aplicação web projetada para monitorar e analisar surtos de infecção hospitalar. Ela fornece mapas de calor, rankings e resumos para ajudar os profissionais de saúde a tomarem decisões informadas.
 
-First, run the development server:
+## Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Visualização de Mapas de Calor**: Exibe surtos de infecção em um mapa.
+- **Rankings de Hospitais**: Mostra tendências e rankings de hospitais com base nos dados de infecção.
+- **Painel de Resumo**: Fornece métricas-chave como total de surtos, hospitais com alertas e bactérias mais recorrentes.
+
+## Pré-requisitos
+
+- Node.js (v16 ou superior)
+- Python (v3.12 ou superior)
+- Banco de dados PostgreSQL
+
+## Instalação
+
+### Configuração do Frontend
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/seu-repositorio/infectreck.git
+   cd infectreck
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
+
+### Configuração do Backend
+
+1. Navegue até a pasta `backend`:
+
+   ```bash
+   cd backend
+   ```
+
+2. Configure um ambiente virtual:
+
+   ```bash
+   python -m venv env
+   source env/bin/activate  # No Windows: .\env\Scripts\Activate.ps1
+   ```
+
+3. Instale as dependências do Python:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Configure o banco de dados:
+
+   - Atualize o `DATABASE_URL` no arquivo `main.py` com suas credenciais do PostgreSQL.
+   - Execute o script SQL `data_insertion.sql` para popular o banco de dados.
+
+5. Inicie o servidor FastAPI:
+
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+6. Acesse o backend em [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+## Estrutura do Projeto
+
+```
+infectreck/
+├── app/                # Aplicação Frontend
+│   ├── components/     # Componentes reutilizáveis do React
+│   ├── dashboard/      # Página do Dashboard
+│   └── pages/          # Outras páginas
+├── backend/            # Aplicação Backend
+│   ├── main.py         # Servidor FastAPI
+│   ├── models.py       # Modelos do banco de dados
+│   ├── data_insertion.sql # Script SQL para inserção de dados
+│   └── test_data.json  # Dados de teste
+├── env/                # Ambiente virtual Python
+├── public/             # Arquivos públicos
+├── package.json        # Dependências do Frontend
+├── README.md           # Documentação do projeto
+└── tsconfig.json       # Configuração do TypeScript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Implantação
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Frontend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Implante o frontend usando [Vercel](https://vercel.com/):
 
-## Learn More
+1. Envie seu código para um repositório GitHub.
+2. Conecte o repositório ao Vercel.
+3. Siga os passos de implantação no Vercel.
 
-To learn more about Next.js, take a look at the following resources:
+### Backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Implante o backend manualmente seguindo os passos de configuração descritos acima. Certifique-se de que o servidor FastAPI está rodando e o banco de dados PostgreSQL está configurado corretamente.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contribuição
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contribuições são bem-vindas! Por favor, abra uma issue ou envie um pull request no GitHub.

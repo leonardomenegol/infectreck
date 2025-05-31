@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import HeatmapComponent from '../components/HeatmapComponent';
+import dynamic from 'next/dynamic';
 import RankingList from '../components/RankingList';
 import CardResumo from '../components/CardResumo';
 import { supabase } from '../../frontend/supabaseClient';
+import { GoogleMap, HeatmapLayer, useJsApiLoader } from '@react-google-maps/api';
 
 const Dashboard: React.FC = () => {
   const [selectedBacteria, setSelectedBacteria] = useState('');
@@ -13,11 +14,16 @@ const Dashboard: React.FC = () => {
   const [rankingItems, setRankingItems] = useState<{ name: string; trend: 'up' | 'down' }[]>([]);
   const [summaryData, setSummaryData] = useState({ totalOutbreaks: 0, hospitalsWithAlerts: 0, mostRecurringBacteria: '' });
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+    libraries: ['visualization'],
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       // Fetch heatmap data
       const { data: surtos } = await supabase
-        .from('surtos') 
+        .from('surtos')
         .select('lat, lng, intensidade');
       setHeatmapData(
         surtos
@@ -31,24 +37,26 @@ const Dashboard: React.FC = () => {
 
       // Fetch ranking data
       const { data: hospitais } = await supabase
-        .from('hospitais') 
-        .select('nome, tendencia'); 
+        .from('hospitais')
+        .select('nome, tendencia');
       setRankingItems(hospitais ? hospitais.map((h) => ({ name: h.nome, trend: h.tendencia })) : []);
 
       // Fetch summary data
       const { data: resumo } = await supabase
-        .from('resumo') 
+        .from('resumo')
         .select('*')
         .single();
       setSummaryData({
-        totalOutbreaks: resumo?.total_surtos || 0, 
-        hospitalsWithAlerts: resumo?.hospitais_com_alertas || 0, 
-        mostRecurringBacteria: resumo?.bacteria_mais_recorrente || '', 
+        totalOutbreaks: resumo?.total_surtos || 0,
+        hospitalsWithAlerts: resumo?.hospitais_com_alertas || 0,
+        mostRecurringBacteria: resumo?.bacteria_mais_recorrente || '',
       });
     };
 
     fetchData();
   }, []);
+
+  const heatmapDataPoints = heatmapData.map((point) => ({ location: new google.maps.LatLng(point.lat, point.lng), weight: point.intensity }));
 
   return (
     <div className="flex">
@@ -67,9 +75,15 @@ const Dashboard: React.FC = () => {
         <h1 className="text-4xl font-bold mb-6 text-black">Visão por Hospital</h1>
 
         {/* Mapa de Calor */}
-        <div className="w-full max-w-4xl mb-6">
-          <HeatmapComponent data={heatmapData} />
-        </div>
+        {isLoaded && (
+          <GoogleMap
+            mapContainerStyle={{ height: '500px', width: '100%' }}
+            center={{ lat: -30.0346, lng: -51.2177 }}
+            zoom={12}
+          >
+            <HeatmapLayer data={heatmapDataPoints} />
+          </GoogleMap>
+        )}
 
         {/* Filtros */}
         <div className="flex justify-between w-full max-w-4xl mb-6">
@@ -108,12 +122,6 @@ const Dashboard: React.FC = () => {
           <CardResumo title="Total de Surtos Ativos" value={summaryData.totalOutbreaks} status="critical" />
           <CardResumo title="Hospitais com Alertas" value={summaryData.hospitalsWithAlerts} status="warning" />
           <CardResumo title="Bactéria Mais Recorrente" value={summaryData.mostRecurringBacteria} status="normal" />
-        </div>
-
-        {/* Mapa de Hospitais com Mais Surtos */}
-        <div className="w-full max-w-4xl mt-6">
-          <h2 className="text-2xl font-bold mb-4 text-black">Mapa de Hospitais com Mais Surtos</h2>
-          <HeatmapComponent data={heatmapData} />
         </div>
       </div>
     </div>
