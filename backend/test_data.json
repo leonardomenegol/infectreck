@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "hospital": "Hospital A",
+      "setor": "Setor 1",
+      "data": "2025-05-30",
+      "valor": 10
+    },
+    {
+      "hospital": "Hospital A",
+      "setor": "Setor 2",
+      "data": "2025-05-30",
+      "valor": 15
+    },
+    {
+      "hospital": "Hospital B",
+      "setor": "Setor 1",
+      "data": "2025-05-30",
+      "valor": 20
+    },
+    {
+      "hospital": "Hospital B",
+      "setor": "Setor 2",
+      "data": "2025-05-30",
+      "valor": 25
+    },
+    {
+      "hospital": "Hospital C",
+      "setor": "Setor 1",
+      "data": "2025-05-30",
+      "valor": 30
+    }
+  ]
+}
