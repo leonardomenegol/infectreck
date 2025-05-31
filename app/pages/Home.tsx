@@ -20,10 +20,10 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-6">Infectrack</h1>
+      <h1 className="text-4xl font-bold mb-6 text-black">Infectrack</h1>
       <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md w-80">
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium text-black">Email</label>
           <input
             type="email"
             id="email"
@@ -35,7 +35,7 @@ const Home: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">Senha</label>
+          <label htmlFor="password" className="block text-sm font-medium text-black">Senha</label>
           <input
             type="password"
             id="password"

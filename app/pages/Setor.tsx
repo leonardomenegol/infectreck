@@ -1,53 +1,55 @@
 import React from 'react';
+import HeatmapComponent from '../components/HeatmapComponent';
+import TimelineHorizontal from '../components/TimelineHorizontal';
+import CardResumo from '../components/CardResumo';
+import RankingList from '../components/RankingList';
 
 const Setor: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6">Mapa de Calor por Setor</h1>
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Heatmap Section */}
-        <div className="flex-1 bg-white p-4 rounded shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Mapa de Calor</h2>
-          <div className="h-64 bg-gray-200 rounded">Heatmap Placeholder</div>
-        </div>
-
-        {/* Ranking Section */}
-        <div className="flex-1 bg-white p-4 rounded shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Ranking de Setores</h2>
-          <ul className="list-disc pl-5">
-            <li>Setor A <span className="text-green-500">↑</span></li>
-            <li>Setor B <span className="text-red-500">↓</span></li>
-            <li>Setor C <span className="text-green-500">↑</span></li>
-          </ul>
-        </div>
+    <div className="flex">
+      {/* Sidebar */}
+      <div className="w-64 h-screen bg-gray-800 text-gray-300 flex flex-col p-4">
+        <h2 className="text-2xl font-bold mb-6 text-gray-100">Infectrack</h2>
+        <nav className="flex flex-col gap-4">
+          <a href="/dashboard" className="hover:bg-gray-700 p-2 rounded text-gray-300">Visão por Hospital</a>
+          <a href="/setor" className="hover:bg-gray-700 p-2 rounded text-gray-300">Ranking de Setores</a>
+          <a href="/leito" className="hover:bg-gray-700 p-2 rounded text-gray-300">Detalhes de Leitos</a>
+        </nav>
       </div>
 
-      {/* Timeline Section */}
-      <div className="mt-6 bg-white p-4 rounded shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Timeline de Surtos</h2>
-        <div className="h-32 bg-gray-200 rounded">Timeline Placeholder</div>
-      </div>
+      {/* Main Content */}
+      <div className="flex flex-col items-center justify-center flex-1 bg-gray-100">
+        <h1 className="text-4xl font-bold mb-6 text-black">Mapa de Calor por Setor</h1>
 
-      {/* Summary Panel */}
-      <div className="mt-6 bg-white p-4 rounded shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Painel Resumo</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-100 p-4 rounded">
-            <p><strong>Surtos ativos:</strong> 5</p>
-          </div>
-          <div className="bg-gray-100 p-4 rounded">
-            <p><strong>Setores com surtos recentes:</strong> 3</p>
-          </div>
+        {/* Mapa de Calor */}
+        <div className="w-full max-w-4xl mb-6">
+          <HeatmapComponent data={[]} />
         </div>
-      </div>
 
-      {/* Button to Leitos */}
-      <div className="mt-6 text-center">
-        <button
-          className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          Ver Leitos
-        </button>
+        {/* Ranking de Setores */}
+        <div className="w-full max-w-4xl mb-6">
+          <RankingList items={[]} />
+        </div>
+
+        {/* Linha do Tempo */}
+        <div className="w-full max-w-4xl mb-6">
+          <TimelineHorizontal events={[]} />
+        </div>
+
+        {/* Painel Resumo */}
+        <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
+          <CardResumo title="Total de Casos Ativos" value={5} status="critical" />
+          <CardResumo title="Setores com Surtos Recentes" value={3} status="warning" />
+        </div>
+
+        {/* Botão para Detalhes */}
+        <div className="mt-6 text-center">
+          <button
+            className="bg-indigo-600 text-gray-100 py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Ver Detalhes do Setor
+          </button>
+        </div>
       </div>
     </div>
   );
